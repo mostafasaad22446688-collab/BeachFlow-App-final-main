@@ -36,7 +36,7 @@ exports.login = async (req, res, next) => {
   
     if (user.isVerified === false) {
     return res.status(403).json({ 
-        message: "برجاء تفعيل الحساب أولاً ",
+        message: "برجاء تفعيل الحساب أولاً من خلال الكود المرسل إلى إيميلك",
         isVerified: false 
     });
     }
