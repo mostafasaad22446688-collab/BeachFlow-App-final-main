@@ -43,8 +43,16 @@ exports.generateTicket = async (req, res, next) => {
         res.status(200).json({
             message: "تم توليد التذكرة بنجاح ",
             data: {
-                bookingId: booking.id,
-                qrCode: qrImage
+                beachName: booking.beach.name,             
+                location:Beach.location,
+                openingTime: Beach.openingTime,
+                closingTime: Beach.closingTime,
+                bookingDate: booking.bookingDate,
+                qrCode: qrImage, 
+                displayId: formattedBookingId,
+                customerName: booking.user.name,
+                numberOfPersons: booking.numberOfPersons,
+
 
             }
         });
