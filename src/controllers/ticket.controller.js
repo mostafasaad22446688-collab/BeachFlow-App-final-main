@@ -105,15 +105,24 @@ exports.verifyAndCheckIn = async (req, res) => {
             isRead: false
         }).catch(err => console.log("Notification Error:", err.message));
 
-        // 6. الرد للأدمن بالبيانات عشان يتأكد
+        const persons = booking.numberOfPersons || 1;
+        const umbrellasNeeded = Math.ceil(persons / 3);
+        const chairsNeeded = persons;
+        const checkInDate = new Date();
         res.status(200).json({
             success: true,
             message: "تم تسجيل الدخول بنجاح ✅",
             data: {
                 customerName: booking.user.name,
                 beachName: booking.beach.name,
-                persons: booking.numberOfPersons,
-                checkInTime: new Date()
+                numberOfPersons: persons,
+                totalPrice: booking.totalPrice, 
+                checkInTime: checkInDate, 
+                resources: {
+                    umbrellas: umbrellasNeeded,
+                    chairs: chairsNeeded,
+                    note: `تم تخصيص ${umbrellasNeeded} شمسية و ${chairsNeeded} كرسي لهذا الحجز.`
+                }
             }
         });
 
