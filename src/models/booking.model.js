@@ -10,7 +10,7 @@ const Booking = sequelize.define("Booking", {
   paymobOrderId: {type: DataTypes.STRING,allowNull: true},
   totalPrice: {type: DataTypes.FLOAT,allowNull: false,},
   numberOfPersons: {type: DataTypes.INTEGER,allowNull: false,defaultValue: 1},
-  status: {type: DataTypes.ENUM('pending', 'confirmed', 'cancelled'),defaultValue: 'pending'}
+  status: {type: DataTypes.ENUM('pending', 'confirmed', 'checked_in'),defaultValue: 'pending'}
 },
 {timestamps: true, });
                                 
