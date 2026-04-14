@@ -44,9 +44,9 @@ exports.generateTicket = async (req, res, next) => {
             message: "تم توليد التذكرة بنجاح ",
             data: {
                 beachName: booking.beach.name,             
-                location:Beach.location,
-                openingTime: Beach.openingTime,
-                closingTime: Beach.closingTime,
+                location: booking.beach.location,
+                openingTime: booking.beach.openingTime,
+                closingTime: booking.beach.closingTime,
                 bookingDate: booking.bookingDate,
                 qrCode: qrImage, 
                 displayId: formattedBookingId,
