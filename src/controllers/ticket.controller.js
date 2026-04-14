@@ -72,13 +72,9 @@ exports.verifyAndCheckIn = async (req, res) => {
                 include: [{ model: Beach, as: 'beach' }, { model: User, as: 'user' }]
             });
         }
-
-        // 2. التحقق من وجود الحجز
         if (!booking) {
             return res.status(404).json({ success: false, message: "عذراً، لم يتم العثور على هذا الحجز." });
         }
-
-        // 3. التحقق من الحالة الحالية (Business Logic)
         if (booking.status === 'checked_in') {
             return res.status(400).json({ 
                 success: false, 
@@ -92,11 +88,7 @@ exports.verifyAndCheckIn = async (req, res) => {
                 message: "هذا الحجز غير مؤكد، لا يمكن تسجيل الدخول." 
             });
         }
-
-        // 4. تحديث الحالة إلى checked_in
         await booking.update({ status: 'checked_in' });
-
-        // 5. إرسال إشعار لليوزر إن تذكرته اتفعلت ودخل الشاطئ
         await Notification.create({
             userId: booking.user.id,
             title: "استمتع بوقتك! 🌊",
@@ -111,7 +103,7 @@ exports.verifyAndCheckIn = async (req, res) => {
         const checkInDate = new Date();
         res.status(200).json({
             success: true,
-            message: "تم تسجيل الدخول بنجاح ✅",
+            message: "تم التحقق من الحجز بنجاح ✅",
             data: {
                 customerName: booking.user.name,
                 beachName: booking.beach.name,
