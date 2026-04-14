@@ -31,6 +31,7 @@ exports.generateTicket = async (req, res, next) => {
             persons: booking.numberOfPersons,
             status: booking.status
         });
+        
         const qrImage = await QRCode.toDataURL(ticketData);
             await Notification.create({
             userId: booking.user.id,
