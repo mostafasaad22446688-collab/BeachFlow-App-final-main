@@ -4,7 +4,8 @@ const { sequelize } = require("../config/db");
 module.exports = sequelize.define("User", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, allowNull: false },
-  roleStatus: {type: DataTypes.ENUM('user', 'pending', 'approved', 'admin'),defaultValue: 'user'},
+  roleStatus: {type: DataTypes.ENUM('none', 'pending', 'approved', 'rejected'),defaultValue: 'none'},
+  role: { type: DataTypes.ENUM('user', 'admin'), defaultValue: 'user' },
   email: { type: DataTypes.STRING, unique: true, allowNull: false },
   password: { type: DataTypes.STRING, allowNull: false },
   otp: { type: DataTypes.STRING },
