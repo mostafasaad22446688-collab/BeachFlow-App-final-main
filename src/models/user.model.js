@@ -8,7 +8,7 @@ module.exports = sequelize.define("User", {
   email: { type: DataTypes.STRING, unique: true, allowNull: false },
   password: { type: DataTypes.STRING, allowNull: false },
   otp: { type: DataTypes.STRING },
-  profilePic: {type: DataTypes.STRING,allowNull: true,defaultValue: "https://example.com/default-avatar.png"},
+  profilePic: {type: DataTypes.STRING,allowNull: true,defaultValue: "https://res.cloudinary.com/dbtztjban/image/upload/v1776224547/crlr7uj7of49redi07la.png"},
   isVerified: { type: DataTypes.BOOLEAN, defaultValue: false },
   idCardUrl: {type: DataTypes.STRING,allowNull: true}
 });
