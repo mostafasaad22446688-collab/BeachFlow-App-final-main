@@ -9,5 +9,7 @@ module.exports = sequelize.define("User", {
   role: { type: DataTypes.ENUM("user", "admin"), defaultValue: "user" },
   otp: { type: DataTypes.STRING },
   profilePic: {type: DataTypes.STRING,allowNull: true,defaultValue: "https://example.com/default-avatar.png"},
-  isVerified: { type: DataTypes.BOOLEAN, defaultValue: false }
+  isVerified: { type: DataTypes.BOOLEAN, defaultValue: false },
+  idCardUrl: {type: DataTypes.STRING,allowNull: true},
+  roleStatus: {type: DataTypes.ENUM('none', 'pending', 'approved', 'rejected'),defaultValue: 'none'}
 });

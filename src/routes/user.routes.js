@@ -4,7 +4,8 @@ const userController = require('../controllers/user.controller');
 const authMiddleware = require('../middleware/auth.middleware');
 
 router.get('/profile', authMiddleware, userController.getUserProfile);
+router.put('/edit-profile', authMiddleware, userController.editUserProfile);
 
-router.put('/profile', authMiddleware, userController.editUserProfile);
+router.post('/request-admin', authMiddleware, userController.submitAdminRequest);
 
 module.exports = router;
