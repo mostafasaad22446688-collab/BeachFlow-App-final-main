@@ -77,7 +77,7 @@ exports.getBeachBookings = async (req, res) => {
                 {
                     model: Beach,
                     as: 'beach',
-                    where: { userId: adminId } // تأكد إن الشاطئ ملك للأدمن ده
+                    where: {adminId: adminId } // تأكد إن الشاطئ ملك للأدمن ده
                 },
                 {
                     model: User,
