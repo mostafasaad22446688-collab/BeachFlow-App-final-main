@@ -1,4 +1,4 @@
-const { Booking, Beach, Notification } = require("../models/index");
+const { Booking, Beach, Notification,User } = require("../models/index");
 
 exports.createBooking = async (req, res) => {
     try {
