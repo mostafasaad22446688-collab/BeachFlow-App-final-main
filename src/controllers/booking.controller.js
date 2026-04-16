@@ -66,3 +66,57 @@ exports.getUserBookings = async (req, res, next) => {
         res.status(500).json({ message: "حدث خطأ أثناء جلب الحجوزات" });
     }
 };
+
+exports.getBeachBookings = async (req, res) => {
+    try {
+        // الأدمن اللي داخل بيشوف بس حجوزات الشاطئ بتاعه
+        const adminId = req.user.id; 
+
+        const bookings = await Booking.findAll({
+            include: [
+                {
+                    model: Beach,
+                    as: 'beach',
+                    where: { userId: adminId } // تأكد إن الشاطئ ملك للأدمن ده
+                },
+                {
+                    model: User,
+                    as: 'user',
+                    attributes: ['name', 'email'] // بيانات العميل المطلوبة في الصورة
+                }
+            ],
+            order: [['createdAt', 'DESC']] // الأحدث يظهر الأول
+        });
+
+        // تحويل البيانات لشكل يتناسب مع التصميم اللي بعته
+        const formattedBookings = bookings.map(booking => {
+            const persons = booking.numberOfPersons || 1;
+            return {
+                id: booking.id,
+                bookingCode: `BK-2026-${booking.id}`,
+                status: booking.status, 
+                customer: {
+                    name: booking.user.name,
+                    email: booking.user.email
+                },
+                details: {
+                    date: booking.date,
+                    time: "8:00 صباحاً - 2:00 مساءً", 
+                    persons: persons,
+                    umbrellas: Math.ceil(persons / 3), 
+                    chairs: persons 
+                },
+                totalPrice: booking.totalPrice
+            };
+        });
+
+        res.status(200).json({
+            success: true,
+            count: formattedBookings.length,
+            data: formattedBookings
+        });
+
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
