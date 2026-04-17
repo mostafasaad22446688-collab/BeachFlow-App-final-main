@@ -18,6 +18,7 @@ exports.getPendingAdmins = async (req, res) => {
             data: pendingUsers
         });
     } catch (error) {
+        console.error("❌ Controller Error:", error); // عشان يظهرلك في الـ Terminal
         res.status(500).json({ success: false, message: error.message });
     }
 };
