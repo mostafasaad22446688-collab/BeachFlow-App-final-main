@@ -1,6 +1,5 @@
 const { User, Notification } = require("../models/index");
 
-// 1. جلب قائمة طلبات الانضمام (للصفحة الأولى)
 exports.getPendingAdmins = async (req, res) => {
     try {
         const pendingUsers = await User.findAll({
@@ -9,7 +8,6 @@ exports.getPendingAdmins = async (req, res) => {
             order: [['createdAt', 'DESC']]
         });
 
-        // حساب الإحصائيات للـ Cards اللي فوق في الصورة الأولى
         const totalPending = pendingUsers.length;
         const totalApproved = await User.count({ where: { roleStatus: 'approved' } });
         const totalRequests = await User.count({ where: { roleStatus: ['pending', 'approved', 'rejected'] } });
@@ -24,10 +22,9 @@ exports.getPendingAdmins = async (req, res) => {
     }
 };
 
-// 2. الموافقة أو الرفض (للصفحة الثانية - Modal)
 exports.handleAdminAction = async (req, res) => {
     try {
-        const { userId, action } = req.body; // action: 'approve' or 'reject'
+        const { userId, action } = req.body;
 
         const user = await User.findByPk(userId);
         if (!user) return res.status(404).json({ message: "المستخدم غير موجود" });

@@ -17,6 +17,7 @@ app.use('/api/favorites', require('./src/routes/favorite.routes'));
 app.use('/api/notifications', notificationRoutes);
 app.use("/api/reviews", require("./src/routes/review.routes"));
 app.use(require("./src/middleware/error.middleware"));
+app.use("/api/superAdmin", require("./src/routes/superAdmin.routes"));
 module.exports = app;
 
 
