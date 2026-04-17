@@ -22,5 +22,17 @@ const authMiddleware = (req, res, next) => {
     return res.status(401).json({ message: "Token is invalid or expired" });
   }
 };
+const isSuperAdmin = (req, res, next) => {
+
+  if (req.user && req.user.role === 'superAdmin') {
+    next(); 
+  } else {
+    return res.status(403).json({ 
+      message: "Access denied. SuperAdmin privileges required." 
+    });
+  }
+};
+
+module.exports = { authMiddleware, isSuperAdmin };
 
 module.exports = authMiddleware;

@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
+const { authMiddleware, isSuperAdmin } = require("../middleware/auth");
 const superAdminController = require("../controllers/superAdmin.controller");
-const { isAuth, isSuperAdmin } = require("../middleware/auth.middleware"); // تأكد من حماية المسارات
 
 // لجلب الطلبات والإحصائيات
-router.get("/super-requests", isAuth, isSuperAdmin, superAdminController.getPendingAdmins);
+router.get("/super-requests", authMiddleware, isSuperAdmin, superAdminController.getPendingAdmins);
 
 // لتنفيذ الموافقة أو الرفض
-router.post("/super-action", isAuth, isSuperAdmin, superAdminController.handleAdminAction);
+router.post("/super-action", authMiddleware, isSuperAdmin, superAdminController.handleAdminAction);
 
 module.exports = router;
