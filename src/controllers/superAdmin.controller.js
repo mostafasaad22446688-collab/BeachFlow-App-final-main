@@ -17,23 +17,9 @@ exports.getPendingAdmins = async (req, res) => {
             stats: { totalRequests, totalApproved, totalPending },
             data: pendingUsers
         });
-    }catch (error) {
-    // اطبع الخطأ في الـ Terminal (الأسود) بتاع الـ VS Code
-    console.log("------------------- ERROR DETAILS -------------------");
-    console.error(error); 
-    console.log("-----------------------------------------------------");
-
-    res.status(500).json({ 
-        success: false, 
-        message: error.message, 
-        error_stack: error.stack // ده هيقولك رقم السطر اللي فيه undefined بالظبط
-    });
-} 
-    
-    
-    // catch (error) {
-    //     res.status(500).json({ success: false, message: error.message });
-    // }
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
 };
 
 exports.handleAdminAction = async (req, res) => {
