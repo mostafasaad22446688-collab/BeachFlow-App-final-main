@@ -69,46 +69,45 @@ exports.getUserBookings = async (req, res, next) => {
 
 exports.getBeachBookings = async (req, res) => {
     try {
-        // الأدمن اللي داخل بيشوف بس حجوزات الشاطئ بتاعه
         const adminId = req.user.id; 
-
         const bookings = await Booking.findAll({
             include: [
                 {
                     model: Beach,
                     as: 'beach',
-                    where: {adminId: adminId } // تأكد إن الشاطئ ملك للأدمن ده
+                    where: {adminId: adminId } 
                 },
                 {
                     model: User,
                     as: 'user',
-                    attributes: ['name', 'email'] // بيانات العميل المطلوبة في الصورة
+                    attributes: ['name', 'email'] 
                 }
             ],
-            order: [['createdAt', 'DESC']] // الأحدث يظهر الأول
+            order: [['createdAt', 'DESC']] 
         });
 
-        // تحويل البيانات لشكل يتناسب مع التصميم اللي بعته
-        const formattedBookings = bookings.map(booking => {
-            const persons = booking.numberOfPersons || 1;
-            return {
-                id: booking.id,
-                bookingCode: `BK-2026-${booking.id}`,
-                status: booking.status, 
-                customer: {
-                    name: booking.user.name,
-                    email: booking.user.email
-                },
-                details: {
-                    date: booking.date,
-                    time: "8:00 صباحاً - 2:00 مساءً", 
-                    persons: persons,
-                    umbrellas: Math.ceil(persons / 3), 
-                    chairs: persons 
-                },
-                totalPrice: booking.totalPrice
-            };
-        });
+    const formattedBookings = bookings.map(booking => {
+        const persons = booking.numberOfPersons ;
+        const beachOpening = booking.beach.openTime ; 
+        const beachClosing = booking.beach.closeTime ;
+        return {
+            id: booking.id,
+            bookingCode: `BK-${new Date(booking.createdAt).getFullYear()}-${booking.id}`,
+            status: booking.status, 
+            customer: {
+                name: booking.user.name,
+                email: booking.user.email
+            },
+            details: {
+                date: booking.date, 
+                time: `${beachOpening} - ${beachClosing}`, 
+                persons: persons,
+                umbrellas: Math.ceil(persons / 3), 
+                chairs: persons 
+            },
+            totalPrice: booking.totalPrice
+        };
+    });
 
         res.status(200).json({
             success: true,
