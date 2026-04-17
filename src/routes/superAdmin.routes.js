@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { authMiddleware, isSuperAdmin } = require("../middleware/auth");
+const { authMiddleware, isSuperAdmin } = require("../middleware/auth.middleware");
 const superAdminController = require("../controllers/superAdmin.controller");
 
 // لجلب الطلبات والإحصائيات
