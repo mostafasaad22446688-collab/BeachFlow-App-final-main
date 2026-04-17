@@ -13,7 +13,7 @@ User.hasMany(Booking, { foreignKey: 'userId', as: 'bookings' });
 Beach.hasMany(Booking, { foreignKey: 'beachId', as: 'bookings' }); 
 
 
-User.hasMany(Beach, { foreignKey: 'adminId', as: 'managedBeaches' });
+User.hasMany(Beach, { foreignKey: 'adminId', as: 'beach' });
 Beach.belongsTo(User, { foreignKey: 'adminId', as: 'admin' });
 
 User.hasMany(Favorite, { foreignKey: 'userId', as: 'favorites' });
