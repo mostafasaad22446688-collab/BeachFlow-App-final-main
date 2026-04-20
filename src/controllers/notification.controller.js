@@ -12,7 +12,8 @@ exports.getUserNotifications = async (req, res) => {
                     { userId: null }    
                 ]
             },
-            order: [['createdAt', 'DESC']] 
+            attributes: ['id', 'title', 'message', 'type', 'link', 'createdAt'], 
+            order: [['createdAt', 'DESC']]
         });
 
         res.status(200).json(notifications);
