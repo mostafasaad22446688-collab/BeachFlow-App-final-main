@@ -2,10 +2,20 @@ const { User, Notification } = require("../models/index");
 
 exports.getPendingAdmins = async (req, res) => {
     try {
+        // const allrequests = await User.findAll({
+        //     where: { roleStatus: ['pending', 'approved', 'rejected'] },
+        //     attributes: ['id', 'name', 'email', 'createdAt', 'roleStatus', 'idCardUrl'],
+        //     order: [['createdAt', 'DESC']]
+        // });
         const allrequests = await User.findAll({
-            where: { roleStatus: ['pending', 'approved', 'rejected'] },
-            attributes: ['id', 'name', 'email', 'createdAt', 'roleStatus', 'idCardUrl'],
-            order: [['createdAt', 'DESC']]
+        where: { roleStatus: ['pending', 'approved', 'rejected'] },
+         attributes: ['id', 'name', 'email', 'createdAt', 'roleStatus', 'idCardUrl'],
+        });
+
+        allrequests.sort((a, b) => {
+            if (a.roleStatus === 'pending' && b.roleStatus !== 'pending') return -1;
+            if (a.roleStatus !== 'pending' && b.roleStatus === 'pending') return 1;
+            return new Date(b.createdAt) - new Date(a.createdAt);
         });
 
         const totalRequests = allrequests.length;
