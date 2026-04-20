@@ -2,23 +2,24 @@ const { User, Notification } = require("../models/index");
 
 exports.getPendingAdmins = async (req, res) => {
     try {
-        const pendingUsers = await User.findAll({
-            where: { roleStatus: 'pending' },
+        const allrequests = await User.findAll({
+            where: { roleStatus: ['pending', 'approved', 'rejected'] },
             attributes: ['id', 'name', 'email', 'createdAt', 'roleStatus', 'idCardUrl'],
             order: [['createdAt', 'DESC']]
         });
 
-        const totalPending = pendingUsers.length;
+        const totalRequests = allrequests.length;
+        const totalPending = await User.count({ where: { roleStatus: 'pending' } });
         const totalApproved = await User.count({ where: { roleStatus: 'approved' } });
-        const totalRequests = await User.count({ where: { roleStatus: ['pending', 'approved', 'rejected'] } });
+
 
         res.status(200).json({
             success: true,
             stats: { totalRequests, totalApproved, totalPending },
-            data: pendingUsers
+            data: allrequests
         });
     } catch (error) {
-        console.error("❌ Controller Error:", error); // عشان يظهرلك في الـ Terminal
+        console.error("❌ Controller Error:", error);
         res.status(500).json({ success: false, message: error.message });
     }
 };
