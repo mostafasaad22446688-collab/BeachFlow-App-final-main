@@ -23,9 +23,9 @@ const Notification = sequelize.define('Notification', {
         type: DataTypes.ENUM('beach_added', 'beach_updated','payment_success','edit_profile','ticket_generated','new_review','admin_request','upgrade_user'),
         defaultValue: 'beach_added'
     },
-    isRead: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false
+    link: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
 }, {
     tableName: 'Notifications' 

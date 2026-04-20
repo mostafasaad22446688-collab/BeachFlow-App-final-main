@@ -27,8 +27,8 @@ exports.createBooking = async (req, res) => {
             userId: userId,
             title: "تم تجهيز حجزك 🎟️",
             message: `حجزك لعدد ${count} أفراد في ${beach.name} جاهز. المبلغ الإجمالي: ${totalPrice} جنيه.`,
-            type: 'info',
-            isRead: false
+            type: 'payment_success'
+
         }).catch(err => console.log("Notification Error:", err.message));
 
         res.status(201).json({

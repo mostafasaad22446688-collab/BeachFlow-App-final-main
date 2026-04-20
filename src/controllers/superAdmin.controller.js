@@ -2,11 +2,6 @@ const { User, Notification } = require("../models/index");
 
 exports.getPendingAdmins = async (req, res) => {
     try {
-        // const allrequests = await User.findAll({
-        //     where: { roleStatus: ['pending', 'approved', 'rejected'] },
-        //     attributes: ['id', 'name', 'email', 'createdAt', 'roleStatus', 'idCardUrl'],
-        //     order: [['createdAt', 'DESC']]
-        // });
         const allrequests = await User.findAll({
             where: { roleStatus: ['pending', 'approved', 'rejected'] },
             attributes: ['id', 'name', 'email', 'createdAt', 'roleStatus', 'idCardUrl'],
@@ -37,7 +32,7 @@ exports.getPendingAdmins = async (req, res) => {
 exports.handleAdminAction = async (req, res) => {
     try {
         const { userId, action } = req.body;
-
+        const dashboardUrl = "https://beach-flow-admin.vercel.app";
         const user = await User.findByPk(userId);
         if (!user) return res.status(404).json({ message: "المستخدم غير موجود" });
 
@@ -52,7 +47,7 @@ exports.handleAdminAction = async (req, res) => {
                 title: "تهانينا! تم قبول طلبك 🎊",
                 message: `مرحباً ${user.name}، تمت الموافقة على طلبك بنجاح. يمكنك الآن الدخول لوحة التحكم وإدارة شاطئك.`,
                 type: 'upgrade_user',
-                isRead: false
+                link: dashboardUrl
             }).then(() => {
                 console.log("🚀 Admin Approval Notification saved to Database!");
             });

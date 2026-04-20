@@ -94,17 +94,17 @@ exports.updateBeach = async (req, res, next) => {
         // تعديل البيانات المختارة فقط للأمان
         const { name, location, price, description, imageUrl } = req.body;
         await beach.update({ name, location, price, description, imageUrl });
-await Notification.create({
-    title: 'تم تعديل بيانات شاطئك!🏖️',
-    message: `تم إضافة شاطئ "${name}" في "${location}". احجز مكانك الآن!`, 
-    type: 'beach_updated',
-    userId: null 
-});
+        await Notification.create({
+            title: 'تم تعديل بيانات شاطئك!🏖️',
+            message: `تم إضافة شاطئ "${name}" في "${location}". احجز مكانك الآن!`, 
+            type: 'beach_updated',
+            userId: null 
+        });
         res.status(200).json({ message: "تم التحديث بنجاح", beach });
     } catch (error) {
         next(error);
     }
-};
+    };
 
 // 7. حذف
 exports.deleteBeach = async (req, res, next) => {
