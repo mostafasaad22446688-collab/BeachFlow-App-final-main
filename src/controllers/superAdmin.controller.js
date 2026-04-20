@@ -8,8 +8,8 @@ exports.getPendingAdmins = async (req, res) => {
         //     order: [['createdAt', 'DESC']]
         // });
         const allrequests = await User.findAll({
-        where: { roleStatus: ['pending', 'approved', 'rejected'] },
-         attributes: ['id', 'name', 'email', 'createdAt', 'roleStatus', 'idCardUrl'],
+            where: { roleStatus: ['pending', 'approved', 'rejected'] },
+            attributes: ['id', 'name', 'email', 'createdAt', 'roleStatus', 'idCardUrl'],
         });
 
         allrequests.sort((a, b) => {
