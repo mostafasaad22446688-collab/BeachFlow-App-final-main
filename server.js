@@ -5,7 +5,7 @@ const app = require("./app");
 
 const start = async () => {
   await connectDB();
-sequelize.sync()
+sequelize.sync({ alter: true })
   .then(() => {
     console.log("✅ Database updated Successfully!");
     const PORT = process.env.PORT || 3000;
