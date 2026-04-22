@@ -45,7 +45,7 @@ exports.handleAdminAction = async (req, res) => {
             await Notification.create({
                 userId: user.id,
                 title: "تهانينا! تم قبول طلبك 🎊",
-                message: `مرحباً ${user.name}، تمت الموافقة على طلبك بنجاح. يمكنك الآن الدخول لوحة التحكم وإدارة شاطئك.`,
+                message: `مرحباً ${user.name}، تمت الموافقة على طلبك بنجاح.يرجى اعاده تسجيل الدخول ثم الدخول على لينك الداشبورد المرفق  يمكنك الآن الدخول لوحة التحكم وإدارة شاطئك.`,
                 type: 'upgrade_user',
                 link: dashboardUrl
             }).then(() => {
@@ -62,7 +62,7 @@ exports.handleAdminAction = async (req, res) => {
             await Notification.create({
                 userId: user.id,
                 title: "عتذر! تم رفض طلبك 😔",
-                message: `مرحباً ${user.name}، تم رفض طلبك. يمكنك إعادة التقديم في وقت لاحق.`,
+                message: ` ${user.name}، تم رفض طلبك. يمكنك إعادة التقديم في وقت لاحق.`,
                 type: 'upgrade_user'
             })
             return res.status(200).json({ success: true, message: "تم رفض الطلب" });
