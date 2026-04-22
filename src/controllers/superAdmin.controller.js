@@ -32,7 +32,7 @@ exports.getPendingAdmins = async (req, res) => {
 exports.handleAdminAction = async (req, res) => {
     try {
         const { userId, action } = req.body;
-        const dashboardUrl = "https://beach-flow-admin.vercel.app";
+        const dashboardUrl = "https://beach-flow-dashboard.vercel.app";
         const user = await User.findByPk(userId);
         if (!user) return res.status(404).json({ message: "المستخدم غير موجود" });
 
