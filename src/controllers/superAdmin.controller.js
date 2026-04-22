@@ -59,6 +59,12 @@ exports.handleAdminAction = async (req, res) => {
 
         } else if (action === 'reject') {
             await user.update({ roleStatus: 'rejected' });
+             await Notification.create({
+                userId: user.id,
+                title: "عتذر! تم رفض طلبك 😔",
+                message: `مرحباً ${user.name}، تم رفض طلبك. يمكنك إعادة التقديم في وقت لاحق.`,
+                type: 'upgrade_user'
+            })
             return res.status(200).json({ success: true, message: "تم رفض الطلب" });
         }
 
