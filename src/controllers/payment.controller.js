@@ -82,8 +82,7 @@ exports.paymentWebhook = async (req, res) => {
                     userId: booking.userId,
                     title: "تم تأكيد الحجز ✅",
                     message: `تمت عملية الدفع بنجاح لشاطئ ${beachName}. تذكرتك جاهزة!`,
-                    type: 'payment_success',
-                    isRead: false
+                    type: 'payment_success'
                 }).then(() => {
                     console.log("🚀 Notification saved to Database!");
                 }).catch(err => {
