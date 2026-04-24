@@ -5,11 +5,21 @@ exports.getUserNotifications = async (req, res) => {
     try {
 
         const userId = req.user.id; 
+        const userCreatedAt = req.user.createdAt; // تاريخ تسجيل اليوزر
         const notifications = await Notification.findAll({
             where: {
-                [Op.or]: [
-                    { userId: userId },
-                    { userId: null }    
+                [Op.and]: [
+                    {
+                        [Op.or]: [
+                            { userId: userId },
+                            { userId: null }
+                        ]
+                    },
+                    {
+                        createdAt: {
+                            [Op.gte]: userCreatedAt 
+                        }
+                    }
                 ]
             },
             attributes: ['id', 'title', 'message', 'type', 'link', 'createdAt'], 
@@ -21,3 +31,4 @@ exports.getUserNotifications = async (req, res) => {
         res.status(500).json({ message: "فشل في جلب الإشعارات" });
     }
 };
+
