@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
-const { User } = require("../models"); // تأكد من مسار الموديل عندك
+const { User } = require("../models/index"); // تأكد من مسار الموديل عندك
 
 
 
-const authMiddleware = (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
   // 1️⃣ جلب token من headers
   const authHeader = req.headers["authorization"];
   if (!authHeader) {
