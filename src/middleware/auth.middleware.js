@@ -1,4 +1,7 @@
 const jwt = require("jsonwebtoken");
+const { User } = require("../models"); // تأكد من مسار الموديل عندك
+
+
 
 const authMiddleware = (req, res, next) => {
   // 1️⃣ جلب token من headers
@@ -16,12 +19,23 @@ const authMiddleware = (req, res, next) => {
   try {
     // 3️⃣ verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; 
+    const user = await User.findByPk(decoded.id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    req.user = user; 
     next(); 
   } catch (error) {
     return res.status(401).json({ message: "Token is invalid or expired" });
   }
 };
 
-
 module.exports = authMiddleware;
+
+
+
+
+
+

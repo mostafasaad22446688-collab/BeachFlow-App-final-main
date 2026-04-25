@@ -5,7 +5,7 @@ exports.getUserNotifications = async (req, res) => {
     try {
 
         const userId = req.user.id; 
-        const userCreatedAt = req.user.createdAt; // تاريخ تسجيل اليوزر
+        const userCreatedAt = req.user.createdAt; 
         const notifications = await Notification.findAll({
             where: {
                 [Op.and]: [
