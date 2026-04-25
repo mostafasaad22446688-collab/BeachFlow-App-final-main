@@ -68,7 +68,7 @@ exports.addBeach = async (req, res, next) => {
     try {
         const adminId = req.user.id;
         const existingBeach = await Beach.findOne({ where: { adminId: adminId } });
-
+        console.log("Existing Beach found:", existingBeach); // لو ظهرت داتا هنا يبقى ده سبب المنع
         if (existingBeach) {
             return res.status(400).json({ 
                 success: false, 
@@ -76,16 +76,7 @@ exports.addBeach = async (req, res, next) => {
             });
         }
 
-        const { 
-            name, 
-            location, 
-            price, 
-            description, 
-            imageUrl, 
-            maxCapacity, 
-            openingTime, 
-            closingTime 
-        } = req.body;
+        const { name,location,price,description,imageUrl,maxCapacity,openingTime,closingTime } = req.body;
 
         const newBeach = await Beach.create({
             name, 
