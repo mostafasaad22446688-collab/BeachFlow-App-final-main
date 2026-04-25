@@ -109,45 +109,6 @@ exports.addBeach = async (req, res, next) => {
 
 
 
-exports.addBeach = async (req, res) => {
-    try {
-        const userId = req.user.id; // المعرف الخاص بالأدمن اللي جاي من الميدل وير
-
-        // 1️⃣ البحث عن أي شاطئ مسجل مسبقاً لهذا المستخدم
-        const existingBeach = await Beach.findOne({ where: { userId: userId } });
-
-        // 2️⃣ لو لقيت شاطئ، ارفض الإضافة
-        if (existingBeach) {
-            return res.status(400).json({ 
-                success: false, 
-                message: "لا يمكنك إضافة أكثر من شاطئ واحد. يمكنك تعديل شاطئك الحالي فقط." 
-            });
-        }
-
-        // 3️⃣ لو ملقيتش، كمل عملية الإضافة عادي
-        const { name, location, price, description, imageUrl } = req.body;
-        
-        const newBeach = await Beach.create({
-            name,
-            location,
-            price,
-            description,
-            imageUrl,
-            userId // ربط الشاطئ بصاحبه
-        });
-
-        res.status(201).json({
-            success: true,
-            message: "تم إضافة الشاطئ بنجاح",
-            data: newBeach
-        });
-
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
-};
-
-
 
 
 
