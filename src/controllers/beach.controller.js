@@ -25,45 +25,6 @@ exports.getOne = async (req, res, next) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// 3. إضافة شاطئ جديد (للأدمن)
-// exports.addBeach = async (req, res, next) => {
-//     try {
-//         const { name, location, price, description, imageUrl,maxCapacity, openingTime, closingTime } = req.body;
-//         const newBeach = await Beach.create({
-//             name, location, price, description, imageUrl,maxCapacity,openingTime, closingTime,
-//             availableCapacity: maxCapacity,
-//             adminId: req.user.id 
-//         });
-//         await Notification.create({
-//             title:'تم إضافة شاطئ جديد! 🏖️',
-//             message: `تم إضافة شاطئ "${name}" في "${location}". احجز مكانك الآن!`, 
-//             type: 'beach_added',
-//             userId: null 
-//         });
-//         res.status(201).json({ message: "تم إضافة الشاطئ بنجاح", beach: newBeach });
-//     } 
-//     catch (error) {
-//         next(error);
-//     }
-// };
-
-
-
-
 exports.addBeach = async (req, res, next) => {
     try {
         const adminId = req.user.id;
@@ -106,19 +67,6 @@ exports.addBeach = async (req, res, next) => {
         next(error);
     }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
