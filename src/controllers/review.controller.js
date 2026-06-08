@@ -5,7 +5,6 @@ exports.addReview = async (req, res, next) => {
         const { beachId, rating, comment } = req.body;
         const userId = req.user?.id;
 
-        // ✅ التحقق من البيانات المدخلة
         if (!userId) {
             return res.status(400).json({ success: false, message: "User ID is undefined. Please check your authentication token." });
         }
@@ -18,7 +17,6 @@ exports.addReview = async (req, res, next) => {
             return res.status(400).json({ success: false, message: "Valid rating is required" });
         }
 
-        // 1. إنشاء التقييم
         const newReview = await Review.create({
             rating: parseFloat(rating),
             comment: comment || "",
@@ -26,7 +24,6 @@ exports.addReview = async (req, res, next) => {
             beachId: parseInt(beachId)
         });
 
-        // 2. حساب المتوسط يدوياً (أضمن من fn)
         const allReviews = await Review.findAll({ where: { beachId: parseInt(beachId) } });
         let newAverage = parseFloat(rating).toFixed(1);
 
@@ -35,10 +32,8 @@ exports.addReview = async (req, res, next) => {
             newAverage = (sum / allReviews.length).toFixed(1);
         }
 
-        // 3. تحديث الشاطئ
         await Beach.update({ rating: newAverage }, { where: { id: beachId } });
 
-        // 4. الإشعار (بنوع new_review)
         await Notification.create({
             userId: userId,
             title: "تقييم جديد 🌟",

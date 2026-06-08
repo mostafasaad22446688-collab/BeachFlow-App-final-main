@@ -19,7 +19,6 @@ exports.toggleFavorite = async (req, res, next) => {
     }
 };
 
-// 2. عرض مفضلات اليوزر
 exports.getUserFavorites = async (req, res, next) => {
     try {
         const favorites = await Favorite.findAll({

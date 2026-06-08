@@ -1,6 +1,5 @@
 const { User, Notification } = require('../models/index');
 
-// 1. جلب بيانات البروفايل (معدل لعرض الصورة)
 exports.getUserProfile = async (req, res, next) => {
     try {
         const user = await User.findByPk(req.user.id, {
@@ -11,7 +10,6 @@ exports.getUserProfile = async (req, res, next) => {
             return res.status(404).json({ message: "المستخدم غير موجود" });
         }
 
-        // هيرجع البيانات شاملة الـ profilePic اللي ضفناه في الموديل
         res.status(200).json(user);
     } catch (error) {
         console.error("❌ FULL ERROR OBJECT:", error);
@@ -32,13 +30,11 @@ exports.editUserProfile = async (req, res, next) => {
             return res.status(404).json({ message: "المستخدم غير موجود" });
         }
 
-        // تحديث البيانات (الاسم والصورة)
         await user.update({
             name: name || user.name,
             profilePic: profilePic || user.profilePic 
         });
 
-        // إشعار التحديث
         await Notification.create({
             userId: user.id,
             title: "تحديث الحساب 👤",
@@ -63,8 +59,6 @@ exports.editUserProfile = async (req, res, next) => {
     }
 };
 
-
-
 exports.submitAdminRequest = async (req, res) => {
     try {
         const { idCardUrl } = req.body; 
@@ -77,7 +71,6 @@ exports.submitAdminRequest = async (req, res) => {
         const user = await User.findByPk(userId);
         if (!user) return res.status(404).json({ message: "المستخدم غير موجود" });
 
-        // تحديث بيانات المستخدم
         await user.update({
             idCardUrl: idCardUrl,
             roleStatus: 'pending' 

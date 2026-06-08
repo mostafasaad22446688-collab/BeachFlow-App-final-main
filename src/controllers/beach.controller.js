@@ -2,7 +2,6 @@
 const { Beach,Notification } = require("../models/index");
 const  {Op}  = require("sequelize");
 
-// 1. جلب كل الشواطئ
 exports.getAll = async (req, res, next) => {
     try {
         const beaches = await Beach.findAll({ order: [['createdAt', 'DESC']] }); // الترتيب من الأحدث
@@ -12,7 +11,6 @@ exports.getAll = async (req, res, next) => {
     }
 };
 
-// 2. جلب شاطئ واحد
 exports.getOne = async (req, res, next) => {
     try {
         const beach = await Beach.findByPk(req.params.id);
@@ -22,8 +20,6 @@ exports.getOne = async (req, res, next) => {
         next(error);
     }
 };
-
-
 
 exports.addBeach = async (req, res, next) => {
     try {
@@ -68,10 +64,6 @@ exports.addBeach = async (req, res, next) => {
     }
 };
 
-
-
-
-// 4. البحث عن شاطئ (Search)
 exports.getSearch = async (req, res, next) => {
   try {
     let { q } = req.query; 
@@ -97,7 +89,7 @@ exports.getSearch = async (req, res, next) => {
     next(error);
   }
 };
-// 5. شواطئ الأدمن الحالي فقط
+
 exports.getMyBeaches = async (req, res, next) => {
     try {
         const beaches = await Beach.findAll({
@@ -110,7 +102,6 @@ exports.getMyBeaches = async (req, res, next) => {
     }
 };
 
-// 6. تحديث (تعديل)
 exports.updateBeach = async (req, res, next) => {
     try {
         const beach = await Beach.findOne({ where: { id: req.params.id, adminId: req.user.id } });
@@ -131,7 +122,6 @@ exports.updateBeach = async (req, res, next) => {
     }
     };
 
-// 7. حذف
 exports.deleteBeach = async (req, res, next) => {
     try {
         const beach = await Beach.findOne({ where: { id: req.params.id, adminId: req.user.id } });
